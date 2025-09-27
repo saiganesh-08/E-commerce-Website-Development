@@ -1,5 +1,3 @@
-# Flask Backend for E-commerce Website
-# Note: Do not commit secrets. Use environment variables or a .env file not checked in.
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -9,7 +7,6 @@ import mysql.connector
 app = Flask(__name__)
 CORS(app)
 
-# Configuration - read from environment variables
 DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'port': int(os.getenv('DB_PORT', 3306)),
@@ -18,7 +15,6 @@ DB_CONFIG = {
     'database': os.getenv('DB_NAME', 'ecommerce_db'),
 }
 
-# Utility function to get a DB connection
 
 def get_db_connection():
     return mysql.connector.connect(
@@ -33,7 +29,6 @@ def get_db_connection():
 def health_check():
     return jsonify({'status': 'ok', 'service': 'flask-backend'}), 200
 
-# Sample route to get products (placeholder)
 @app.route('/api/products', methods=['GET'])
 def get_products():
     sample_products = [
@@ -42,7 +37,6 @@ def get_products():
     ]
     return jsonify(sample_products), 200
 
-# Sample route to create a user (placeholder - no password logic here)
 @app.route('/api/register', methods=['POST'])
 def register_user():
     data = request.get_json() or {}
@@ -50,7 +44,6 @@ def register_user():
     if not all(k in data for k in required):
         return jsonify({'error': 'Missing required fields'}), 400
 
-    # Example of parameterized insert (commented out as placeholder)
     # try:
     #     conn = get_db_connection()
     #     cursor = conn.cursor()
@@ -64,10 +57,8 @@ def register_user():
     #     cursor.close()
     #     conn.close()
 
-    # Return a mock response
     return jsonify({'message': 'User registered (mock)', 'user': data}), 201
 
-# Error handlers
 @app.errorhandler(404)
 def not_found(_):
     return jsonify({'error': 'Not found'}), 404
